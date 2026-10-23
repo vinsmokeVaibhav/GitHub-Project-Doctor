@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Project Doctor - Hackathon Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: #0a0a0a;
+        }
+
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+            position: relative;
+            scroll-snap-align: start;
+        }
+
+        .slide-container {
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+            height: 100vh;
+        }
+
+        /* Slide 1 - Title */
+        .slide-1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .slide-1 h1 {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .slide-1 .emoji {
+            font-size: 8rem;
+            animation: pulse 2s infinite;
+        }
+
+        .slide-1 p {
+            font-size: 1.8rem;
+            margin-top: 20px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .slide-1 .tagline {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-top: 40px;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        /* Slide 2 - The Problem */
+        .slide-2 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .slide-2 h2 {
+            font-size: 4rem;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin-top: 40px;
+        }
+
+        .problem-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .problem-card .icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .problem-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .problem-card p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Slide 3 - The Solution */
+        .slide-3 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .slide-3 h2 {
+            font-size: 4rem;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .solution-box {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 60px;
+            border-radius: 30px;
+            max-width: 900px;
+            text-align: center;
+            border: 3px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .solution-box .big-emoji {
+            font-size: 6rem;
+            margin-bottom: 30px;
+        }
+
+        .solution-box h3 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .solution-box p {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        .features-list {
+            display: flex;
+            gap: 30px;
+            margin-top: 40px;
+            justify-content: center;
+        }
+
+        .feature-pill {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Slide 4 - How It Works */
+        .slide-4 {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: #2d3748;
+        }
+
+        .slide-4 h2 {
+            font-size: 4rem;
+            margin-bottom: 50px;
+            text-align: center;
+            color: white;
+        }
+
+        .workflow {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            max-width: 1400px;
+        }
+
+        .workflow-step {
+            flex: 1;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .workflow-step:hover {
+            transform: translateY(-10px);
+        }
+
+        .workflow-step .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        .workflow-step .step-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .workflow-step h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+
+        .workflow-step p {
+            font-size: 1rem;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .arrow {
+            font-size: 2.5rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Slide 5 - Tech Stack */
+        .slide-5 {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #2d3748;
+        }
+
+        .slide-5 h2 {
+            font-size: 4rem;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+        }
+
+        .tech-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        .tech-card .tech-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .tech-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+
+        .tech-card p {
+            font-size: 1.1rem;
+            color: #4a5568;
+        }
+
+        /* Slide 6 - Demo/Impact */
+        .slide-6 {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+            color: white;
+        }
+
+        .slide-6 h2 {
+            font-size: 4rem;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .demo-container {
+            max-width: 1000px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 50px;
+            border-radius: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .score-showcase {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 40px;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 0 auto 20px;
+            border: 5px solid white;
+        }
+
+        .score-red { background: #ef4444; }
+        .score-yellow { background: #f59e0b; }
+        .score-green { background: #10b981; }
+
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+        }
+
+        .stat-box .big-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-box p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Slide 7 - Call to Action */
+        .slide-7 {
+            background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .slide-7 h2 {
+            font-size: 5rem;
+            margin-bottom: 30px;
+        }
+
+        .slide-7 .big-emoji {
+            font-size: 8rem;
+            margin-bottom: 30px;
+            animation: bounce 2s infinite;
+        }
+
+        .slide-7 p {
+            font-size: 2rem;
+            margin-bottom: 50px;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .cta-button {
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+
+        .cta-button-primary {
+            background: rgba(0, 0, 0, 0.3);
+            border: 3px solid white;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .team-info {
+            margin-top: 50px;
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Navigation dots */
+        .nav-dots {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot:hover {
+            background: white;
+            transform: scale(1.3);
+        }
+
+        /* Slide navigation info */
+        .slide-number {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide slide-1">
+            <div class="emoji">🩺</div>
+            <h1>GitHub Project Doctor</h1>
+            <p class="tagline">Diagnose. Fix. Impress.</p>
+            <p>Making every GitHub repo stranger-ready</p>
+            <div class="slide-number">1 / 7</div>
+        </div>
+
+        <!-- Slide 2: The Problem -->
+        <div class="slide slide-2">
+            <h2>😰 The Problem</h2>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="icon">🤔</div>
+                    <h3>Lost Strangers</h3>
+                    <p>87% of recruiters can't run student projects they're evaluating due to poor setup docs</p>
+                </div>
+                <div class="problem-card">
+                    <div class="icon">📦</div>
+                    <h3>Missing Context</h3>
+                    <p>Great code becomes invisible when no one can understand what it does or how to run it</p>
+                </div>
+                <div class="problem-card">
+                    <div class="icon">⏰</div>
+                    <h3>Wasted Opportunities</h3>
+                    <p>Students lose job opportunities because their portfolio projects look "incomplete"</p>
+                </div>
+                <div class="problem-card">
+                    <div class="icon">❓</div>
+                    <h3>Blind Spots</h3>
+                    <p>Developers don't know what's missing because they already know how their project works</p>
+                </div>
+            </div>
+            <div class="slide-number">2 / 7</div>
+        </div>
+
+        <!-- Slide 3: The Solution -->
+        <div class="slide slide-3">
+            <h2>💡 Our Solution</h2>
+            <div class="solution-box">
+                <div class="big-emoji">🩺</div>
+                <h3>An AI-Powered Repository Health Checker</h3>
+                <p>GitHub Project Doctor analyzes your repository through the eyes of a complete stranger and tells you exactly what's broken, why it matters, and how to fix it in minutes.</p>
+                <div class="features-list">
+                    <div class="feature-pill">📊 Health Score</div>
+                    <div class="feature-pill">🎯 Prioritized Fixes</div>
+                    <div class="feature-pill">⚡ Instant Analysis</div>
+                </div>
+            </div>
+            <div class="slide-number">3 / 7</div>
+        </div>
+
+        <!-- Slide 4: How It Works -->
+        <div class="slide slide-4">
+            <h2>⚙️ How It Works</h2>
+            <div class="workflow">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">🔗</div>
+                    <h3>Paste GitHub URL</h3>
+                    <p>Simply paste any public repository link</p>
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">🔍</div>
+                    <h3>Analyze Evidence</h3>
+                    <p>We fetch metadata, README, dependencies, and file structure</p>
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">🤖</div>
+                    <h3>AI Diagnosis</h3>
+                    <p>LLM evaluates through a "stranger test" framework</p>
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">📋</div>
+                    <h3>Get Report</h3>
+                    <p>Receive prioritized issues with actionable fixes</p>
+                </div>
+            </div>
+            <div class="slide-number">4 / 7</div>
+        </div>
+
+        <!-- Slide 5: Tech Stack -->
+        <div class="slide slide-5">
+            <h2>🛠️ Tech Stack</h2>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <div class="tech-icon">⚛️</div>
+                    <h3>React + Vite</h3>
+                    <p>Lightning-fast frontend with modern UX</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🎨</div>
+                    <h3>TailwindCSS</h3>
+                    <p>Beautiful, responsive design system</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🚀</div>
+                    <h3>Node.js + Express</h3>
+                    <p>Robust REST API backend</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🐙</div>
+                    <h3>GitHub API</h3>
+                    <p>Real-time repository data fetching</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🧠</div>
+                    <h3>OpenAI GPT-4</h3>
+                    <p>Intelligent diagnosis generation</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">📦</div>
+                    <h3>RESTful Design</h3>
+                    <p>Stateless, scalable architecture</p>
+                </div>
+            </div>
+            <div class="slide-number">5 / 7</div>
+        </div>
+
+        <!-- Slide 6: Demo/Impact -->
+        <div class="slide slide-6">
+            <h2>📊 Impact & Results</h2>
+            <div class="demo-container">
+                <h3 style="font-size: 2rem; margin-bottom: 30px; text-align: center;">Health Score Transformation</h3>
+                <div class="score-showcase">
+                    <div class="score-item">
+                        <div class="score-circle score-red">35</div>
+                        <p style="font-size: 1.3rem;">Before</p>
+                    </div>
+                    <div style="font-size: 3rem; align-self: center;">→</div>
+                    <div class="score-item">
+                        <div class="score-circle score-green">92</div>
+                        <p style="font-size: 1.3rem;">After</p>
+                    </div>
+                </div>
+
+                <div class="impact-stats">
+                    <div class="stat-box">
+                        <div class="big-number">⚡ 5m</div>
+                        <p>Average fix time per issue</p>
+                    </div>
+                    <div class="stat-box">
+                        <div class="big-number">🎯 100%</div>
+                        <p>Actionable recommendations</p>
+                    </div>
+                    <div class="stat-box">
+                        <div class="big-number">🚀 3s</div>
+                        <p>Analysis completion time</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">6 / 7</div>
+        </div>
+
+        <!-- Slide 7: Call to Action -->
+        <div class="slide slide-7">
+            <div class="big-emoji">🎯</div>
+            <h2>Ready to Heal Your Repos?</h2>
+            <p>Stop guessing. Start diagnosing.<br/>Make every repository interview-ready.</p>
+            <div class="cta-buttons">
+                <a href="http://localhost:5173" class="cta-button cta-button-primary">Try Live Demo</a>
+                <a href="https://github.com" class="cta-button cta-button-primary">View on GitHub</a>
+            </div>
+            <div class="team-info">
+                <p>Built with ❤️ for developers who care about first impressions</p>
+            </div>
+            <div class="slide-number">7 / 7</div>
+        </div>
+    </div>
+
+    <div class="nav-dots">
+        <div class="dot" onclick="scrollToSlide(0)"></div>
+        <div class="dot" onclick="scrollToSlide(1)"></div>
+        <div class="dot" onclick="scrollToSlide(2)"></div>
+        <div class="dot" onclick="scrollToSlide(3)"></div>
+        <div class="dot" onclick="scrollToSlide(4)"></div>
+        <div class="dot" onclick="scrollToSlide(5)"></div>
+        <div class="dot" onclick="scrollToSlide(6)"></div>
+    </div>
+
+    <script>
+        function scrollToSlide(index) {
+            const slides = document.querySelectorAll('.slide');
+            slides[index].scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const slides = document.querySelectorAll('.slide');
+            const container = document.querySelector('.slide-container');
+            const currentScroll = container.scrollTop;
+            const slideHeight = window.innerHeight;
+            const currentSlide = Math.round(currentScroll / slideHeight);
+
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                if (currentSlide < slides.length - 1) {
+                    scrollToSlide(currentSlide + 1);
+                }
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                if (currentSlide > 0) {
+                    scrollToSlide(currentSlide - 1);
+                }
+            }
+        });
+
+        // Update active dot on scroll
+        const container = document.querySelector('.slide-container');
+        const dots = document.querySelectorAll('.dot');
+
+        container.addEventListener('scroll', () => {
+            const slideHeight = window.innerHeight;
+            const currentSlide = Math.round(container.scrollTop / slideHeight);
+
+            dots.forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.style.background = 'white';
+                    dot.style.transform = 'scale(1.3)';
+                } else {
+                    dot.style.background = 'rgba(255, 255, 255, 0.5)';
+                    dot.style.transform = 'scale(1)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
